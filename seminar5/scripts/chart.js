@@ -72,6 +72,20 @@ window.onload = function () {
         }
     }
 
+    let x = 0;
+    let y = 0;
+    let xDirection = 1;
+    let yDirection = 1;
+    function drawPongBall() {
+        context.fillStyle = 'green';
+        context.fillRect(x, y, 20, 20);
+        //hit the bottom margin
+
+        if (y + 20 >= height) {
+            yDirection *= -1;
+        }
+        // if (x + 20)
+    }
 
     function drawChart() {
         //clear canvas
@@ -86,7 +100,8 @@ window.onload = function () {
         //type Y axis values
         drawYAxisValues();
         //draw the actual chart
-        drawLineChart();
+        //drawLineChart();
+        drawPongBall();
 
     }
 
@@ -94,7 +109,7 @@ window.onload = function () {
          let newValue = generateRandomNumber();
          data.push(newValue);
          data.shift();
-         drawChart();
-     }, 10000)
+        drawChart();
+     }, 10)
     drawChart();
 }
