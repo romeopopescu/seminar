@@ -1,0 +1,102 @@
+<!--
+
+3p) Write a responsive web application that displays a textbox accepting only positive numeric input and three buttons. 
+    If the screen is medium, the input should be span across 6 column and the buttons on 2 columns each.
+    If the screen is smaller, they should have equal sizes of 3 columns each. The elements must have Bootstrap default styling.
+1.5p) Type a number in the input and press a button. Each button is associated with drawing a shape from the following list: 
+    square, circle, line.
+1.5p) When a shape is selected, start a speech synthesizer that should say:
+    "I will draw a new <selected shape>" if the textbox has a valid value, or "Please input value" otherwise.
+1p) When the square is selected, draw on a canvas of size 800x800 a green square with the width of whatever number was set on the input. 
+    The square must be exactly in the center of the canvas.
+1p) When the circle is selected, draw a pink circle with a radius equal to the same number, also in the center.
+1p) When the line is selected, draw a red dashed line from the top-right corner to the middle of the bottom margin, 
+    with a thickness equal to the number in the textbox.
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam2</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+</head>
+<body>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-3 col-md-6">
+                <input id="input" type="number" min="0" class="form-control">
+            </div>
+            <div class="col-3 col-md-2">
+                <button id="squareBtn" type="submit" class="btn btn-primary">Square</button>
+            </div>
+            <div class="col-3 col-md-2">
+                <button id="circleBtn" type="submit" class="btn btn-primary">Circle</button>
+            </div>
+            <div class="col-3 col-md-2">
+                <button id="lineBtn" type="submit" class="btn btn-primary">Line</button> 
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <canvas id="myCanvas" width="400" height="400" style="border: 1px solid black;"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        document.getElementById('squareBtn').addEventListener('click', () => {
+            var input = document.getElementById('input').value;
+            if (input) {
+                var canvas = document.getElementById('myCanvas');
+                var context = canvas.getContext("2d");
+
+                context.fillStyle = "green";
+                context.fillRect(10, 10, input, input);
+                //web speech api
+                let utterance = new SpeechSynthesisUtterance("I will draw a new square");
+                speechSynthesis.speak(utterance);
+   
+            }else {
+                let utterance = new SpeechSynthesisUtterance('Please input value');
+                speechSynthesis.speak(utterance);
+            }
+        });
+        document.getElementById('circleBtn').addEventListener('click', () => {
+            var input = document.getElementById('input').value;
+            if (input) {
+                var canvas = document.getElementById('myCanvas');
+                var context = canvas.getContext("2d");
+                
+                context.strokeStyle = "pink";
+                context.beginPath();
+                context.arc(95, 50, input, 0, 2 * Math.PI);
+                context.stroke();
+                let utterance = new SpeechSynthesisUtterance("I will draw a new circle");
+                speechSynthesis.speak(utterance);
+   
+            }else {
+                let utterance = new SpeechSynthesisUtterance('Please input value');
+                speechSynthesis.speak(utterance);
+            }
+        });
+        // document.getElementById('lineBtn').addEventListener('click', () => {
+        // var input = document.getElementById('input').value;
+        //     if (input) {
+        //         var canvas = document.getElementById('myCanvas');
+        //         var context = canvas.getContext("2d");
+
+        //         context.fillStyle = "green dashed";
+        //         context.fillRect(10, 10, input, input);
+        //         let utterance = new SpeechSynthesisUtterance("I will draw a new square");
+        //         speechSynthesis.speak(utterance);
+   
+        //     }else {
+        //         let utterance = new SpeechSynthesisUtterance('Please input value');
+        //         speechSynthesis.speak(utterance);
+        //     }
+        // })
+
+    </script>
+</body>
+</html>
